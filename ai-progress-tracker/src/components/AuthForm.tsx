@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, Lock, User, Github } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Card, CardContent, CardHeader } from './ui/Card';
@@ -15,7 +15,7 @@ export function AuthForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { signInWithGoogle, signInWithGithub, signInWithEmail, signUpWithEmail, isDemoMode } = useAuth();
+  const { signInWithGoogle, signInWithEmail, signUpWithEmail, isDemoMode } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,19 +49,6 @@ export function AuthForm() {
     }
   };
 
-  const handleGithubSignIn = async () => {
-    setError('');
-    setLoading(true);
-    try {
-      await signInWithGithub();
-    } catch (err: unknown) {
-      const error = err as Error;
-      setError(error.message || 'Failed to sign in with GitHub');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <Card className="w-full max-w-md">
@@ -83,12 +70,12 @@ export function AuthForm() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex justify-center">
               <Button
                 variant="outline"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full"
+                className="w-full max-w-xs"
               >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                   <path
@@ -108,16 +95,7 @@ export function AuthForm() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Google
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleGithubSignIn}
-                disabled={loading}
-                className="w-full"
-              >
-                <Github className="w-5 h-5 mr-2" />
-                GitHub
+                Sign in with Google
               </Button>
             </div>
 
